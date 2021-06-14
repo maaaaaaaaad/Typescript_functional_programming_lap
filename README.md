@@ -26,3 +26,33 @@ const makeDataDir = async (dirName: string) => {
 
 makeDataDir("./data/users");
 ```
+
+src/fileApi/rmdir.ts
+
+```javascript
+import rimraf from "rimraf";
+import { fileExists } from "./fileExists";
+
+export const rmdir = (dirname: string): Promise<string> => {
+  const _rmdir = async (resolve, reject) => {
+    const alreadyExists: boolean = await fileExists(dirname);
+    !alreadyExists
+      ? resolve(dirname)
+      : rimraf(dirname, (error) => (error ? reject(error) : resolve(dirname)));
+  };
+  return new Promise(_rmdir);
+};
+```
+
+src/test/rmdir-test.ts
+
+```javascript
+import { rmdir } from "../fileApi/rmdir";
+
+const deleteDir = async (dir: string) => {
+  const result = await rmdir(dir);
+  console.log(`result delete dir : ${result}`);
+};
+
+deleteDir("./data"); // remove data file
+```
