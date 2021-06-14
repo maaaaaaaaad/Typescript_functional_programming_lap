@@ -58,3 +58,48 @@ const deleteDir = async (dir: string) => {
 
 deleteDir("./data"); // remove data file
 ```
+
+## Make a fake data
+
+src/fake/IFake.ts
+
+```javascript
+export interface IFake {
+  name: string;
+  email: string;
+  sentence: string;
+  profession: string;
+  birthday: Date;
+}
+```
+
+src/fake/makeFakeData.ts
+
+```javascript
+import { IFake } from "./IFake";
+import Chance from "chance";
+
+const c = new Chance();
+
+export const makeFakeData = (): IFake => ({
+  name: c.name(),
+  email: c.email(),
+  sentence: c.sentence(),
+  profession: c.profession(),
+  birthday: c.birthday(),
+});
+
+export { IFake };
+```
+
+src/test/keys-values-test.ts
+
+```javascript
+import { IFake, makeFakeData } from "../fake/makeFakeData";
+
+const data: IFake = makeFakeData();
+const keys = Object.keys(data);
+const values = Object.values(data);
+
+console.log(`keys: ${keys}, values: ${values}`);
+```
