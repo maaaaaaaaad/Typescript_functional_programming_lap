@@ -1,4 +1,4 @@
-# Make a mkdir function
+## Make a mkdir function
 
 src/fileApi
 
@@ -26,6 +26,8 @@ const makeDataDir = async (dirName: string) => {
 
 makeDataDir("./data/users");
 ```
+
+## Make a rmdir function
 
 src/fileApi/rmdir.ts
 
