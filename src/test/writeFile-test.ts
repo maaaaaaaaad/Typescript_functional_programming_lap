@@ -1,17 +1,16 @@
-import { mkdir } from "../fileApi/mkdir";
+import * as path from "path";
 import { writeFile } from "../fileApi/writeFile";
+import { mkdir } from "../fileApi/mkdir";
+import mkdirp = require("mkdirp");
 
 const writeTest = async (fileName: string, data: any) => {
   const result = await writeFile(fileName, data);
-  console.log(`result : ${result}`);
+  console.log(`write ${result} to ${fileName}`);
 };
 
-mkdir("./data")
-  .then((e) => writeFile("./data/hello.txt", "Hello World"))
-  .then((e) =>
-    writeFile(
-      "./data/test.json",
-      JSON.stringify({ name: "Woong", age: 31 }, null, 2)
-    )
+mkdir("./data") //
+  .then((s) => writeTest("./data/hello.txt", "Hello World"))
+  .then((s) =>
+    writeTest("./data/test.json", JSON.stringify({ name: "Woong", age: 31 }))
   )
-  .catch((error) => console.log(error));
+  .catch((error) => console.log(error.message));
